@@ -11,37 +11,52 @@ function createContextMenus() {
         chrome.contextMenus.create({
             id: "urlCopier",
             title: "URL Copier",
-            contexts: ["link", "page"]
+            contexts: ["link", "page", "selection"]
         });
 
         // Create submenu items
         chrome.contextMenus.create({
             id: "copyEncoded",
             parentId: "urlCopier",
-            title: "Copy Encoded URL",
-            contexts: ["link", "page"]
+            title: "Copy Encoded",
+            contexts: ["link", "page", "selection"]
         });
 
         chrome.contextMenus.create({
             id: "copyDecoded",
             parentId: "urlCopier",
-            title: "Copy Decoded URL",
-            contexts: ["link", "page"]
+            title: "Copy Decoded",
+            contexts: ["link", "page", "selection"]
         });
     });
 }
 
 // Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    // Get URL - either from link or current page
-    const url = info.linkUrl || tab.url;
+    let textToProcess;
+    let messagePrefix;
+
+    // Determine what to encode/decode based on context
+    if (info.selectionText) {
+        // Selected text
+        textToProcess = info.selectionText;
+        messagePrefix = "text";
+    } else if (info.linkUrl) {
+        // Link URL
+        textToProcess = info.linkUrl;
+        messagePrefix = "URL";
+    } else {
+        // Current page URL
+        textToProcess = tab.url;
+        messagePrefix = "URL";
+    }
 
     if (info.menuItemId === "copyEncoded") {
-        const encodedUrl = encodeURIComponent(url);
-        copyToClipboard(tab.id, encodedUrl, "Encoded URL copied!");
+        const encodedText = encodeURIComponent(textToProcess);
+        copyToClipboard(tab.id, encodedText, `Encoded ${messagePrefix} copied!`);
     } else if (info.menuItemId === "copyDecoded") {
-        const decodedUrl = decodeURIComponent(url);
-        copyToClipboard(tab.id, decodedUrl, "Decoded URL copied!");
+        const decodedText = decodeURIComponent(textToProcess);
+        copyToClipboard(tab.id, decodedText, `Decoded ${messagePrefix} copied!`);
     }
 });
 
