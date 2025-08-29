@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "URL Copier",
+    "version": "1.0",
+    "description": "Encode and decode URLs with copy functionality, right-click context menu to copy encoded/decoded URLs",
+    "permissions": [
+        "contextMenus",
+        "notifications",
+        "clipboardWrite",
+        "scripting",
+        "activeTab"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "URL Copier"
+    }
+}

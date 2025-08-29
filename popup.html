@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder/Decoder</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>URL Encoder/Decoder</h1>
+        </div>
+
+        <div class="input-section">
+            <label for="urlInput">Enter URL:</label>
+            <textarea id="urlInput" placeholder="Paste your URL here..."></textarea>
+        </div>
+
+        <div class="button-section">
+            <button id="encodeBtn" class="btn encode-btn">Encode</button>
+            <button id="decodeBtn" class="btn decode-btn">Decode</button>
+            <button id="clearBtn" class="btn clear-btn">Clear</button>
+        </div>
+
+        <div class="output-section">
+            <label for="urlOutput">Result:</label>
+            <textarea id="urlOutput" readonly></textarea>
+            <button id="copyBtn" class="btn copy-btn">Copy to Clipboard</button>
+        </div>
+
+        <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
